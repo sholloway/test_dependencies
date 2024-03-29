@@ -1,0 +1,17 @@
+{
+  "packages": [
+    "git@2.42.0",
+    "gnumake@4.4.1",
+    "python@3.12.2"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Starting the Devbox Environment' > /dev/null"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}

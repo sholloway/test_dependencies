@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "test-dependencies"
+version = "0.1.0"
+description = "Given a CSV file of Salesforce Apex dependencies and a file of Apex classes, produces a list of tests to run."
+authors = ["Samuel Holloway <samuel.holloway@salesforce.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+app = "test_dependencies.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+mypy = "^1.9.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+pytest-mock = "^3.14.0"
+pytest-benchmark = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
