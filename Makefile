@@ -42,7 +42,10 @@ init:
 run:
 	@( \
 	source .venv/bin/activate; \
-	poetry run python -O test_dependencies; \
+	poetry run python -O test_dependencies \
+		--dependency_list ./examples/dag_sample.csv \
+		--changed_list ./examples/changed_list.txt \
+		--degrees 1; \
 	)
 
 # Run unit tests. Includes all files in ./test named test_*.py and *_test.py.
@@ -55,7 +58,10 @@ run:
 # Use --durations=0 to find slow running tests.
 # 	poetry run pytest --durations=0
 test:
-	poetry run pytest
+	@( \
+	source .venv/bin/activate; \
+	poetry run pytest; \
+	)
 
 # Run all of the benchmark tests.
 # 

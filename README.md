@@ -27,7 +27,8 @@ files to find associated tests for.
 ```shell
 python -m test_dependencies \
   --dependency_list dependency_list.csv \
-  --changed_list changed_files.txt
+  --changed_list changed_files.txt \
+  --degrees 2
 ```
 
 Run the below query to get the dependency list. 
