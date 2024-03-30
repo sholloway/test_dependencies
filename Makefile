@@ -82,7 +82,7 @@ test:
 benchmark:
 	@( \
 	source .venv/bin/activate; \
-	poetry run pytest ./benchmarks --benchmark-columns="min, mean, max, median, stddev, iqr, outliers, ops, rounds, iterations"; \
+	poetry run pytest benchmarks --benchmark-columns="min, mean, max, median, stddev, iqr, outliers, ops, rounds, iterations"; \
 	)
 
 # Run the benchmarks and generate histograms for each test group.
