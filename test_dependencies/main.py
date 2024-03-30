@@ -1,10 +1,10 @@
 
+from test_dependencies.change_list_loader import ChangeListLoader
 from test_dependencies.dependency_list_loader import DependencyListLoader
 from test_dependencies.options_processor import OptionsProcessor
 
 
-class ChangeListLoader:
-  pass
+
 
 class DistanceMatrixBuilder:
   pass 

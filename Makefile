@@ -88,8 +88,14 @@ benchmark:
 # Run the benchmarks and generate histograms for each test group.
 # Use the -m option to only generate an image for a specific group name.
 viz_benchmark:
-	poetry run pytest ./benchmarks --benchmark-histogram=./benchmark_histograms/$(shell date +%m_%d_%y@%H_%M)/
+	@( \
+	source .venv/bin/activate; \
+	poetry run pytest ./benchmarks --benchmark-histogram=./benchmark_histograms/$(shell date +%m_%d_%y@%H_%M)/; \
+	)
 
 # Perform static type checking on the project.
 check:
-	poetry run mypy --check-untyped-defs --config-file mypy.ini test_dependencies
+	@( \
+	source .venv/bin/activate; \
+	poetry run mypy --check-untyped-defs --config-file mypy.ini test_dependencies; \
+	)
