@@ -1,13 +1,8 @@
 
 from test_dependencies.change_list_loader import ChangeListLoader
-from test_dependencies.dependency_list_loader import DependencyListLoader
+from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
+from test_dependencies.distance_matrix_builder import DistanceMatrixBuilder
 from test_dependencies.options_processor import OptionsProcessor
-
-
-
-
-class DistanceMatrixBuilder:
-  pass 
 
 def main() -> None:
   op = OptionsProcessor()
@@ -15,7 +10,7 @@ def main() -> None:
   
   # 1. Load the Dependencies provided by Salesforce into an adjacent list.
   dll = DependencyListLoader()
-  dependency_list: dict[str, list[str]] = dll.load(filepath=options['dependency_list'])
+  dependency_list: dict[str, DependencyListNode] = dll.load(filepath=options['dependency_list'])
 
   # 2. Load the list of changed Apex classes into memory as a list.
   cll = ChangeListLoader()

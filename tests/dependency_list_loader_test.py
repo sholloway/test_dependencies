@@ -1,15 +1,16 @@
 import pytest
 import os
 from pathlib import Path
-from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode, Item
+from test_dependencies.Item import Item
+from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
 
 EXAMPLE_FILE = 'examples/dag_sample.csv'
 
 @pytest.fixture
 def example_dag() -> dict[str, DependencyListNode]:
   dll = DependencyListLoader()
-  os.path.join(Path.cwd(), EXAMPLE_FILE)
-  dag: dict[str, DependencyListNode] = dll.load(EXAMPLE_FILE)
+  filepath = os.path.join(Path.cwd(), EXAMPLE_FILE)
+  dag: dict[str, DependencyListNode] = dll.load(filepath)
   assert example_dag is not None 
   return dag 
   

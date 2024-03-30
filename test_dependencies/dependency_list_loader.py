@@ -1,7 +1,9 @@
 import csv
 from dataclasses import dataclass
 from enum import StrEnum
-import os 
+import os
+
+from test_dependencies.item import Item 
 
 class DependencyFileHeaders(StrEnum):
   ID = 'Id'
@@ -15,18 +17,9 @@ class DependencyFileHeaders(StrEnum):
   REF_METADATA_COMPONENT_TYPE      = 'RefMetadataComponentType'
 
 @dataclass
-class Item:
-  id: str 
-  name: str
-  type: str
-
-  def __hash__(self) -> int:
-    return hash((self.id, self.name, self.type))
-
-@dataclass
 class DependencyListNode:
   item: Item
-  upstream: set[str]
+  upstream: set[Item]
 
 class DependencyListLoader:
   def __init__(self) -> None:
@@ -50,6 +43,6 @@ class DependencyListLoader:
         upstream_item_name = row[DependencyFileHeaders.METADATA_COMPONENT_NAME]
         upstream_item_type = row[DependencyFileHeaders.METADATA_COMPONENT_TYPE]
         if item_name not in dag:
-          dag[item_name] = DependencyListNode(Item(item_id, item_name, item_type), set[str]())
+          dag[item_name] = DependencyListNode(Item(item_id, item_name, item_type), set[Item]())
         dag[item_name].upstream.add(Item(upstream_item_id, upstream_item_name, upstream_item_type))
     return dag 
