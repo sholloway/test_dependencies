@@ -21,18 +21,19 @@ class DependencyListNode:
   item: Item
   upstream: set[Item]
 
+DependencyListType = dict[str, DependencyListNode]
 class DependencyListLoader:
   def __init__(self) -> None:
     pass
 
-  def load(self, filepath) -> dict[str, DependencyListNode]:
+  def load(self, filepath) -> DependencyListType:
     """
     Builds an in memory direct acyclic graph as an adjacency list. 
     """
     if not os.path.exists(filepath) or not os.path.isfile(filepath):
       raise FileNotFoundError(f'Could not find file {filepath}.')
     
-    dag: dict[str, list[str]] = {}
+    dag: DependencyListType = {}
     with open(file = filepath, newline='') as text_io:
       reader = csv.DictReader(text_io)
       for row in reader:

@@ -1,7 +1,7 @@
 
 from test_dependencies.change_list_loader import ChangeListLoader
 from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
-from test_dependencies.test_selector import TestSelector
+from test_dependencies.apex_test_selector import ApexTestSelector
 from test_dependencies.options_processor import OptionsProcessor
 
 class App:
@@ -9,7 +9,7 @@ class App:
     self._op = OptionsProcessor()
     self._dll = DependencyListLoader()
     self._cll = ChangeListLoader()
-    self._selector = TestSelector()
+    self._selector = ApexTestSelector()
     
   def run(self) -> None:
     options = self._op.process()

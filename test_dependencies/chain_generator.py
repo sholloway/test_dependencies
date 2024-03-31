@@ -12,10 +12,10 @@ class ChainGenerator:
   This is in the form
     A <- B <- C <-... <- N
   """
-  def __init__(self, id_generator: IDGenerator, text_generator: Faker, class_set: set[Item]) -> None:
+  def __init__(self, id_generator: IDGenerator, text_generator: Faker, class_names_set: set[str]) -> None:
     self._id_gen = id_generator
     self._text_gen = text_generator
-    self._class_set = class_set
+    self._class_names_set = class_names_set
 
   def generate(self, max_distance: int = 1) -> list[Item]:
     # Create Apex classes. On the last pass, create an Apex Test.
@@ -38,6 +38,6 @@ class ChainGenerator:
       suffix = TEST_SUFFIX if test else CLASS_SUFFIX[randint(0,5)] 
       class_name = ''.join(camel_case) + suffix
 
-      if class_name not in self._class_set:
-        self._class_set.add(class_name)
+      if class_name not in self._class_names_set:
+        self._class_names_set.add(class_name)
         return class_name

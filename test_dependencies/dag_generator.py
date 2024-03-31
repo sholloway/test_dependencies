@@ -1,11 +1,24 @@
 import csv
 from random import randint
 from faker import Faker
+
 from test_dependencies.chain_generator import ChainGenerator
 from test_dependencies.id_generator import IDGenerator
+from test_dependencies.item import Item 
+
+CSV_HEADER=(
+  'Id',
+  'MetadataComponentId',
+  'MetadataComponentName',
+  'MetadataComponentNamespace',
+  'MetadataComponentType',
+  'RefMetadataComponentId',
+  'RefMetadataComponentName',
+  'RefMetadataComponentNamespace',
+  'RefMetadataComponentType'
+)
 
 class DAGGenerator:
-  CSV_HEADER=('Id','MetadataComponentId','MetadataComponentName','MetadataComponentNamespace','MetadataComponentType','RefMetadataComponentId','RefMetadataComponentName','RefMetadataComponentNamespace','RefMetadataComponentType')
 
   def __init__(self) -> None:
     self._id_gen = IDGenerator()
@@ -23,11 +36,11 @@ class DAGGenerator:
     """
     #1. Generate a chain of classes with the specified distance. 
     hierarchies: list[list[Item]] = []
-    for hierarchy in range(num_hierarchies):
+    for _ in range(num_hierarchies):
       hierarchies.append(self._chain_gen.generate(max_distance=randint(1, max_distance)))
 
     #2. Create a dependency chain of Test -> N -> M ... -> A
-    dag_rows = []
+    dag_rows: list[tuple[str,...]] = []
     for hierarchy in hierarchies:
       num_items = len(hierarchy)
       for position in range(num_items - 1):
@@ -46,10 +59,9 @@ class DAGGenerator:
         dag_rows.append(dag_row)
 
     # 3. Write the rows
-    
     with open(output_filepath, 'w', newline='') as f:
       writer = csv.writer(f)
-      writer.writerow(DAGGenerator.CSV_HEADER)
+      writer.writerow(CSV_HEADER)
       writer.writerows(dag_rows)
 
     return dag_rows

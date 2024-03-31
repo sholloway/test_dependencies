@@ -60,7 +60,7 @@ run:
 test:
 	@( \
 	source .venv/bin/activate; \
-	poetry run pytest; \
+	poetry run pytest ./tests; \
 	)
 
 # Run all of the benchmark tests.

@@ -4,7 +4,7 @@ import pytest
 
 from test_dependencies.change_list_loader import ChangeListLoader
 from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
-from test_dependencies.test_selector import TestSelector
+from test_dependencies.apex_test_selector import ApexTestSelector
 
 EXAMPLE_DAG_FILE = 'examples/2k.csv'
 EXAMPLE_CHANGE_LIST = 'examples/changed_list.txt'
@@ -31,7 +31,7 @@ class TestDistanceMatrixBuilder:
     example_dag: dict[str, DependencyListNode], 
     example_change_list: list[str]
   ) -> None:
-    selector = TestSelector()
+    selector = ApexTestSelector()
     tests_to_run, missing_items = selector.select(example_dag, example_change_list, maximum_distance = 1)
     assert len(tests_to_run) == 7
     assert len(missing_items) == 0
@@ -42,7 +42,7 @@ class TestDistanceMatrixBuilder:
   ) -> None:
     # The 2k sized sample file has references to classes that aren't present.
     # When a class is encountered that cannot be found, it is skipped but recorded.
-    selector = TestSelector()
+    selector = ApexTestSelector()
     tests_to_run, missing_items = selector.select(example_dag, example_change_list, maximum_distance = 2)
     assert len(tests_to_run) == 8
     assert len(missing_items) == 5

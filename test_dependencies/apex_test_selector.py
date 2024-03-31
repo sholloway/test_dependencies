@@ -7,9 +7,7 @@ MissingDAGNode = DependencyListNode(
   upstream=set()
 )
 
-
-
-class TestSelector:
+class ApexTestSelector:
   def __init__(self) -> None:
     pass
 
@@ -18,7 +16,7 @@ class TestSelector:
     dependency_graph: dict[str, DependencyListNode], 
     changed_list: list[str], 
     maximum_distance: int
-  ) -> set[str]:
+  ) -> tuple[set[str], set[str]]:
     tests = set[str]()
     missing_items = set[str]()
     for changed_item_name in changed_list:
