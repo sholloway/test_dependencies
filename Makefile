@@ -45,7 +45,7 @@ run:
 	poetry run python -O test_dependencies \
 		--dependency_list ./examples/2k.csv \
 		--changed_list ./examples/changed_list.txt \
-		--degrees 1; \
+		--degrees 3; \
 	)
 
 # Run unit tests. Includes all files in ./test named test_*.py and *_test.py.

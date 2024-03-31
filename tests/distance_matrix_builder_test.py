@@ -4,7 +4,7 @@ import pytest
 
 from test_dependencies.change_list_loader import ChangeListLoader
 from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
-from test_dependencies.distance_matrix_builder import DistanceMatrixBuilder
+from test_dependencies.test_selector import TestSelector
 
 EXAMPLE_DAG_FILE = 'examples/2k.csv'
 EXAMPLE_CHANGE_LIST = 'examples/changed_list.txt'
@@ -26,11 +26,23 @@ def example_change_list() -> list[str]:
   return changed_list
 
 class TestDistanceMatrixBuilder:
-  def test_stuff(
+  def test_happy_path(
     self, 
     example_dag: dict[str, DependencyListNode], 
     example_change_list: list[str]
   ) -> None:
-    dmb = DistanceMatrixBuilder()
-    distance_matrix = dmb.build(example_dag, example_change_list, maximum_distance=1)
-    assert distance_matrix is not None
+    selector = TestSelector()
+    tests_to_run, missing_items = selector.select(example_dag, example_change_list, maximum_distance = 1)
+    assert len(tests_to_run) == 7
+    assert len(missing_items) == 0
+
+  def test_missing_data(self, 
+    example_dag: dict[str, DependencyListNode], 
+    example_change_list: list[str]
+  ) -> None:
+    # The 2k sized sample file has references to classes that aren't present.
+    # When a class is encountered that cannot be found, it is skipped but recorded.
+    selector = TestSelector()
+    tests_to_run, missing_items = selector.select(example_dag, example_change_list, maximum_distance = 2)
+    assert len(tests_to_run) == 8
+    assert len(missing_items) == 5
