@@ -1,4 +1,4 @@
-.PHONY: env setup init run
+.PHONY: env setup init run test benchmark viz_benchmark check
 
 # Creates an isolated Nix shell for working in.
 # Note: This is optional. If you're not using Nix and manage your Python install
@@ -97,5 +97,5 @@ viz_benchmark:
 check:
 	@( \
 	source .venv/bin/activate; \
-	poetry run mypy --check-untyped-defs --config-file mypy.ini test_dependencies; \
+	poetry run mypy --check-untyped-defs --config-file mypy.ini -p test_dependencies; \
 	)

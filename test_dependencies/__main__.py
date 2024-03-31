@@ -1,4 +1,4 @@
-from test_dependencies.main import main
+from test_dependencies.app import App
 
 if __name__ == '__main__':
-  main()
+  App().run()
