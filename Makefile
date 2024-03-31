@@ -43,7 +43,7 @@ run:
 	@( \
 	source .venv/bin/activate; \
 	poetry run python -O test_dependencies \
-		--dependency_list ./examples/dag_sample.csv \
+		--dependency_list ./examples/2k.csv \
 		--changed_list ./examples/changed_list.txt \
 		--degrees 1; \
 	)

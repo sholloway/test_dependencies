@@ -1,7 +1,7 @@
 import pytest
 import os
 from pathlib import Path
-from test_dependencies.Item import Item
+from test_dependencies.item import Item
 from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
 
 EXAMPLE_FILE = 'examples/dag_sample.csv'

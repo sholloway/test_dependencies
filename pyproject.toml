@@ -17,6 +17,8 @@ faker = "^24.4.0"
 pytest = "^8.1.1"
 pytest-mock = "^3.14.0"
 pytest-benchmark = "^4.0.0"
+pygal = "^3.0.4"
+pygaljs = "^1.0.2"
 
 [build-system]
 requires = ["poetry-core"]

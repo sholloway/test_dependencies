@@ -6,7 +6,7 @@ from test_dependencies.change_list_loader import ChangeListLoader
 from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
 from test_dependencies.distance_matrix_builder import DistanceMatrixBuilder
 
-EXAMPLE_DAG_FILE = 'examples/dag_sample.csv'
+EXAMPLE_DAG_FILE = 'examples/2k.csv'
 EXAMPLE_CHANGE_LIST = 'examples/changed_list.txt'
 
 @pytest.fixture
@@ -34,5 +34,3 @@ class TestDistanceMatrixBuilder:
     dmb = DistanceMatrixBuilder()
     distance_matrix = dmb.build(example_dag, example_change_list, maximum_distance=1)
     assert distance_matrix is not None
-    print(distance_matrix)
-    assert False
