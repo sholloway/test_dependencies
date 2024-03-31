@@ -1,6 +1,4 @@
-
 from test_dependencies.base62 import Base62
-
 
 class TestBase62Encoding:
   def test_encoding(self) -> None:
