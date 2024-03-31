@@ -10,7 +10,7 @@ class IDGenerator:
     self._last_id = starting_id
     self._base62 = Base62()
 
-  def id(self, prefix: str = '01p', host: str = '0M', checksum: str = 'QAY') -> str:
+  def next_id(self, prefix: str = '01p', host: str = '0M', checksum: str = 'QAY') -> str:
     """
     Generates a sequential fake ID in the style of 18 character Salesforce IDs.
 

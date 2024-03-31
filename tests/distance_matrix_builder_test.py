@@ -36,10 +36,3 @@ class TestDistanceMatrixBuilder:
     assert distance_matrix is not None
     print(distance_matrix)
     assert False
-
-  def test_gen_data(self) -> None:
-    maximum_distance: int = 5
-    current_item = None 
-    for current_distance in range(1, maximum_distance+1):
-      if current_distance == maximum_distance:
-        #End of the chain, so create a test.
