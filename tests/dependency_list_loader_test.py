@@ -4,7 +4,7 @@ from pathlib import Path
 from test_dependencies.item import Item
 from test_dependencies.dependency_list_loader import DependencyListLoader, DependencyListNode
 
-EXAMPLE_FILE = 'examples/dag_sample.csv'
+EXAMPLE_FILE = 'examples/2k.csv'
 
 @pytest.fixture
 def example_dag() -> dict[str, DependencyListNode]:
