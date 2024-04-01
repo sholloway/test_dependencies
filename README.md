@@ -1,10 +1,14 @@
 # Salesforce Test Dependencies
-This repo is a proof of concept. 
+This repo contains a proof of concept of identifying tests to run upon a Salesforce
+org deployment. This code is not supported or endorsed by Salesforce. 
+It is only intended as an example of traversing Apex class dependencies.
 
 ## Setup Instructions
 
 1. Install [Devbox](https://www.jetpack.io/devbox/docs/quickstart/).
 2. Install an isolated Python version with Devbox. This may take a little while.
+   Note: This is to just install Python 3.12.x. If you're using a different 
+   mechanism to manage Python locally, then you can skip steps 1 and 2.
   ```shell
   make env
   ```
@@ -22,7 +26,10 @@ This repo is a proof of concept.
 ## Use
 The application is run by passing it two CSV files. On contains the output of 
 querying the MetadataComponentDependency Salesforce object. The other, the list of 
-files to find associated tests for.
+files to find associated tests for. The application writes to STDOUT the list of 
+tests to run. If the algorithm identifies Apex classes that are not in the 
+dependency file (perhaps because they don't exist in the target org) then they are 
+listed in STDOUT.
 
 ```shell
 python -m test_dependencies \
