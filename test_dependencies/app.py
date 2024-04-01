@@ -27,8 +27,15 @@ class App:
       maximum_distance = options['degrees']
     )
 
-    # 4. Write the identified tests to run to STDOUT.
-    print('Tests to Run')
+    # 4. Calculate the Statistics
+    print(f'Number of Tests in DAG: {self._dll.num_tests:,}')
+    print(f'Number of Apex Classes in DAG: {self._dll.num_apex_classes:,}')
+    print(f'Number of Tests to Run: {len(tests_to_run)}git ')
+    print(f'Number of Missing Items in DAG: {len(missing_items)}')
+    print(f'Runing {len(tests_to_run)/self._dll.num_tests * 100:.2f} percent of all tests.')
+
+    # 5. Write the identified tests to run to STDOUT.
+    print('\nTests to Run')
     for test in tests_to_run:
       print(test)
 

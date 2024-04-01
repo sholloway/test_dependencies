@@ -24,7 +24,16 @@ class DependencyListNode:
 DependencyListType = dict[str, DependencyListNode]
 class DependencyListLoader:
   def __init__(self) -> None:
-    pass
+    self._test_counter = 0
+    self._apex_class_counter = 0
+
+  @property
+  def num_tests(self) -> int:
+    return self._test_counter
+  
+  @property
+  def num_apex_classes(self) -> int:
+    return self._apex_class_counter
 
   def load(self, filepath) -> DependencyListType:
     """
@@ -34,6 +43,9 @@ class DependencyListLoader:
       raise FileNotFoundError(f'Could not find file {filepath}.')
     
     dag: DependencyListType = {}
+    unique_test_name        = set[str]()
+    unique_apex_class_name  = set[str]()
+
     with open(file = filepath, newline='') as text_io:
       reader = csv.DictReader(text_io)
       for row in reader:
@@ -43,7 +55,21 @@ class DependencyListLoader:
         upstream_item_id   = row[DependencyFileHeaders.METADATA_COMPONENT_ID]
         upstream_item_name = row[DependencyFileHeaders.METADATA_COMPONENT_NAME]
         upstream_item_type = row[DependencyFileHeaders.METADATA_COMPONENT_TYPE]
+
+        if item_name.upper().endswith('TEST'):
+          unique_test_name.add(item_name)
+        else: 
+          unique_apex_class_name.add(item_name)
+        
+        if upstream_item_name.upper().endswith('TEST'):
+          unique_test_name.add(upstream_item_name)
+        else: 
+          unique_apex_class_name.add(upstream_item_name)
+
         if item_name not in dag:
           dag[item_name] = DependencyListNode(Item(item_id, item_name, item_type), set[Item]())
         dag[item_name].upstream.add(Item(upstream_item_id, upstream_item_name, upstream_item_type))
+
+    self._test_counter = len(unique_test_name)
+    self._apex_class_counter = len(unique_apex_class_name)
     return dag 
