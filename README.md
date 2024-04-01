@@ -57,3 +57,21 @@ This query can be run with the [Salesforce SOAP API](https://developer.salesforc
 
 See instructions for how to use the Tooling and Bulk API [here](https://help.salesforce.com/s/articleView?id=release-notes.rn_api_bulk_metadatacomponentdependency_beta.htm&release=226&type=5).
 
+## How does it Work?
+The Salesforce object MetadataComponentDependency contains relationship data of 
+most metadata types in a Salesforce org. We can use this to identify the relationships
+between Apex tests and the classes they test.
+
+The process is:
+**Bootstrap Steps**
+1. Before running this app, download the dependency data using the above SOQL query. Store this in a CSV file. 
+2. Get the list of changed Apex files that need their tests identified.
+
+**Runtime Algorithm**
+1. Validate commandline options. 
+2. Parse the relationship CSV file (MetadataComponentDependency export) and load 
+   it into memory as an [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) data structure.
+3. Parse the changed file list (text file, with one class per file) and load it into 
+   memory as a list of strings.
+4. Find all tests by traversing the adjacency list. The __degrees__ option is used
+   to specify how many graph traversals to make when searching for related tests.

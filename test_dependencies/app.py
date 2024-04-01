@@ -20,7 +20,7 @@ class App:
     # 2. Load the list of changed Apex classes into memory as a list.
     changed_list: list[str] = self._cll.load(filepath=options['changed_list'])
 
-    # 3. Build the distance matrix for the specified depth.
+    # 3. Find all tests for the specified depth.
     tests_to_run, missing_items = self._selector.select(
       dependency_graph = dependency_list, 
       changed_list = changed_list,
