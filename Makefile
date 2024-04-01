@@ -39,13 +39,22 @@ init:
 # Runs the app in production mode.
 # Typical development flow is:
 # make check test run
-run:
+run_2k:
 	@( \
 	source .venv/bin/activate; \
 	poetry run python -O test_dependencies \
 		--dependency_list ./examples/2k.csv \
-		--changed_list ./examples/changed_list.txt \
+		--changed_list ./examples/2k_changed_list.txt \
 		--degrees 3; \
+	)
+
+run_100k:
+	@( \
+	source .venv/bin/activate; \
+	poetry run python -O test_dependencies \
+		--dependency_list ./examples/100k.csv \
+		--changed_list ./examples/100k_changed_list.txt \
+		--degrees 5; \
 	)
 
 # Run unit tests. Includes all files in ./test named test_*.py and *_test.py.
