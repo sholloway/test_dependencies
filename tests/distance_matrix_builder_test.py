@@ -7,7 +7,7 @@ from test_dependencies.dependency_list_loader import DependencyListLoader, Depen
 from test_dependencies.apex_test_selector import ApexTestSelector
 
 EXAMPLE_DAG_FILE = 'examples/2k.csv'
-EXAMPLE_CHANGE_LIST = 'examples/changed_list.txt'
+EXAMPLE_CHANGE_LIST = 'examples/2k_changed_list.txt'
 
 @pytest.fixture
 def example_dag() -> dict[str, DependencyListNode]:

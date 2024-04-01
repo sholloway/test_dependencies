@@ -4,7 +4,7 @@ import pytest
 
 from test_dependencies.change_list_loader import ChangeListLoader
 
-EXAMPLE_CHANGE_LIST = 'examples/changed_list.txt'
+EXAMPLE_CHANGE_LIST = 'examples/2k_changed_list.txt'
 
 @pytest.fixture
 def change_list_loader() -> ChangeListLoader:
