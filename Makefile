@@ -1,4 +1,4 @@
-.PHONY: env setup init run test benchmark viz_benchmark check
+.PHONY: env setup init run_2k run_100k test benchmark viz_benchmark check
 
 # Creates an isolated Nix shell for working in.
 # Note: This is optional. If you're not using Nix and manage your Python install
@@ -18,17 +18,7 @@ setup:
 	pip install -r requirements.txt; \
 	)
 
-# Initialize the project with Poetry.
-# This only needs to be done once.
-# There are a few dev dependencies (bpython, line-profiler, pudb)
-# that need to be compiled on install. This doesn't play well 
-# with the nix-based project setup (i.e. devbox). 
-# To work around this:
-# 1. make env
-# 2. make setup
-# 3. exit
-# 4. make init
-# 5. make env
+# Initialize the project with Poetry and install dependencies.
 init:
 	@( \
 	source .venv/bin/activate; \
@@ -36,9 +26,7 @@ init:
 	poetry install; \
 	)
 
-# Runs the app in production mode.
-# Typical development flow is:
-# make check test run
+# Runs the app in production mode with a 2000 member DAG.
 run_2k:
 	@( \
 	source .venv/bin/activate; \
@@ -48,6 +36,7 @@ run_2k:
 		--degrees 3; \
 	)
 
+# Runs the app in production mode with a 100K+ member DAG.
 run_100k:
 	@( \
 	source .venv/bin/activate; \
@@ -58,14 +47,6 @@ run_100k:
 	)
 
 # Run unit tests. Includes all files in ./test named test_*.py and *_test.py.
-# To run a single test in a test class do something like:
-# 	poetry run pytest ./tests/core/task_scheduler_test.py::TestTaskScheduler::test_running_simple_functions -s
-# 
-# Use the -s flag to have print statements show up during test runs.
-# 	poetry run pytest -k "simulation_test.py" -s
-#
-# Use --durations=0 to find slow running tests.
-# 	poetry run pytest --durations=0
 test:
 	@( \
 	source .venv/bin/activate; \

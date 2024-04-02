@@ -60,9 +60,9 @@ Run `make run_2k' which is just a shortcut for the below shell snippet.
 
 ```shell
 python -O test_dependencies \
-		--dependency_list ./examples/2k.csv \
-		--changed_list ./examples/2k_changed_list.txt \
-		--degrees 3
+	--dependency_list ./examples/2k.csv \
+	--changed_list ./examples/2k_changed_list.txt \
+	--degrees 3
 ```
 
 This should output the below.
@@ -109,9 +109,9 @@ Run `make run_100k' which is just a shortcut for the below shell snippet.
 
 ```shell
 python -O test_dependencies \
-		--dependency_list ./examples/100k.csv \
-		--changed_list ./examples/100k_changed_list.txt \
-		--degrees 5
+	--dependency_list ./examples/100k.csv \
+	--changed_list ./examples/100k_changed_list.txt \
+	--degrees 5
 ```
 
 This should output the below.
@@ -194,3 +194,20 @@ The process is:
    memory as a list of strings.
 4. Find all tests by traversing the adjacency list. The **degrees** option is used
    to specify how many graph traversals to make when searching for related tests.
+
+## Working with the Codebase
+
+The proof of concept uses a Makefile for project orchestration. The below
+table documents what the various phases do.
+
+| Phase         | Purpose                                                               | Notes                                                            |
+| ------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| env           | Creates a devbox shell to do all work.                                | Note: This is optional if you're managing Python some other way. |
+| setup         | Create a Python virtual environment, install pip, and install Poetry. | Only run once.                                                   |
+| init          | Initialize the project with Poetry and install dependencies.          | Only run once.                                                   |
+| run_2k        | Runs the app in production mode with a 2000 member DAG.               |                                                                  |
+| run_100k      | Runs the app in production mode with a 100K+ member DAG.              |                                                                  |
+| test          | Run the unit tests.                                                   | Includes all files in ./test named test\__.py and _\_test.py.    |
+| benchmark     | Run all of the benchmark tests.                                       |                                                                  |
+| viz_benchmark | Run the benchmarks and generate histograms for each test group.       |                                                                  |
+| check         | Perform static type checking on the project.                          | Uses mypy for type checking.                                     |
