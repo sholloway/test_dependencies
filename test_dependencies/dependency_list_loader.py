@@ -21,7 +21,7 @@ class DependencyListNode:
   item: Item
   upstream: set[Item]
 
-DependencyListType = dict[str, DependencyListNode]
+AdjacencyListType = dict[str, DependencyListNode]
 class DependencyListLoader:
   def __init__(self) -> None:
     self._test_counter = 0
@@ -35,14 +35,14 @@ class DependencyListLoader:
   def num_apex_classes(self) -> int:
     return self._apex_class_counter
 
-  def load(self, filepath) -> DependencyListType:
+  def load(self, filepath) -> AdjacencyListType:
     """
     Builds an in memory direct acyclic graph as an adjacency list. 
     """
     if not os.path.exists(filepath) or not os.path.isfile(filepath):
       raise FileNotFoundError(f'Could not find file {filepath}.')
     
-    dag: DependencyListType = {}
+    dag: AdjacencyListType = {}
     unique_test_name        = set[str]()
     unique_apex_class_name  = set[str]()
 
@@ -56,15 +56,11 @@ class DependencyListLoader:
         upstream_item_name = row[DependencyFileHeaders.METADATA_COMPONENT_NAME]
         upstream_item_type = row[DependencyFileHeaders.METADATA_COMPONENT_TYPE]
 
-        if item_name.upper().endswith('TEST'):
-          unique_test_name.add(item_name)
-        else: 
+        if item_name not in unique_test_name:
           unique_apex_class_name.add(item_name)
         
-        if upstream_item_name.upper().endswith('TEST'):
+        if upstream_item_name.upper().endswith('TEST') and upstream_item_name not in unique_test_name:
           unique_test_name.add(upstream_item_name)
-        else: 
-          unique_apex_class_name.add(upstream_item_name)
 
         if item_name not in dag:
           dag[item_name] = DependencyListNode(Item(item_id, item_name, item_type), set[Item]())

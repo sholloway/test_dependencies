@@ -52,6 +52,8 @@ class ApexTestSelector:
     current_node:DependencyListNode = dependency_graph.get(current_item_name, MissingDAGNode)
 
     if current_node == MissingDAGNode:
+      # Handle the DAG not having an item.
+      # This could be because the DAG is incomplete or it's a new item.
       missing_items.add(current_item_name)
 
     # 3. Find any upstream tests and non-test items.

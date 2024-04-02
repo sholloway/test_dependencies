@@ -1,7 +1,8 @@
 # Salesforce Test Dependencies
 This repo contains a proof of concept of identifying tests to run upon a Salesforce
-org deployment. This code is not supported or endorsed by Salesforce. 
-It is only intended as an example of traversing Apex class dependencies.
+org deployment. This code is NOT SUPPORT or endorsed by Salesforce. 
+It is only intended as an example of traversing Apex class dependencies using the 
+MetadataComponentDependency object.
 
 ## Setup Instructions
 
@@ -38,7 +39,107 @@ python -m test_dependencies \
   --degrees 2
 ```
 
-Run the below query to get the dependency list. 
+## Examples
+The proof of concept has two examples. These can be run with a make target or 
+manually. 
+
+### 2000 member Dependency File
+The first example uses just 2000 items exported from a Salesforce org using the 
+Tooling API. It demonstrates why you should use the Bulk API to export all dependencies.
+Notice in the output the highlighted missing items.
+
+Run `make run_2k' which is just a shortcut for the below shell snippet.
+```shell
+python -O test_dependencies \
+		--dependency_list ./examples/2k.csv \
+		--changed_list ./examples/2k_changed_list.txt \
+		--degrees 3
+```
+
+This should output the below.
+```shell
+|------------------------|-------------------------------------------
+| Metric                 | Value                                    |
+|------------------------|-------------------------------------------
+| Changed Files          | 3                                        |
+| Tests in DAG           | 73                                       |
+| Apex Classes in DAG    | 708                                      |
+| Tests to Run           | 9                                        |
+| Missing Items in DAG   | 5                                        |
+|------------------------|-------------------------------------------
+
+Identified 12.33 percent of all tests.
+
+Tests to Run
+CSC_NotificationPostTest
+CSC_AdditionalFieldsUtilsTest
+CSC_ViewAllRecommendationsControllerTest
+CSC_NotificationsControllerTest
+CSC_PSM_MyCustomersFilterTest
+CSC_UserUtilsTest
+CSC_RenewalAmountFilterTest
+CSC_CompassCloneControllerTest
+CSC_NewCompassControllerTest
+
+Missing Items
+PubQuoteAttachmentController
+SfdcPublishedQuoteCleanup
+CSC_ListServiceWave
+PubQuotePrintController
+PubQuoteUnPublishController
+```
+
+### 100k member Dependency File
+The second example uses fake data. A generated dependency file with over 100k 
+rows is used to demonstrate what a realistic file is like. This is just to 
+test the memory consumption and speed of the proof of concept code. 
+
+Run `make run_100k' which is just a shortcut for the below shell snippet.
+```shell
+python -O test_dependencies \
+		--dependency_list ./examples/100k.csv \
+		--changed_list ./examples/100k_changed_list.txt \
+		--degrees 5
+```
+
+This should output the below.
+```shell
+|------------------------|-------------------------------------------
+| Metric                 | Value                                    |
+|------------------------|-------------------------------------------
+| Changed Files          | 20                                       |
+| Tests in DAG           | 40,000                                   |
+| Apex Classes in DAG    | 119,775                                  |
+| Tests to Run           | 19                                       |
+| Missing Items in DAG   | 0                                        |
+|------------------------|-------------------------------------------
+
+Identified 0.05 percent of all tests.
+
+Tests to Run
+ColdSheRecentlySingleWhereTest
+StandardLandBlueTest
+TownTest
+MissionTest
+WeightTest
+NatureFillTest
+WhichExactlyUponMyExecutiveTest
+FinalAndStandMemberTest
+SurfaceLetTreatTest
+KnowledgeTest
+BestAlsoReachSeaTest
+FriendStayDreamOfferTest
+SpeechFullEventCheckGroupTest
+ActivityUseLifeMagazineInvolveTest
+RoadBuyTest
+FiveFamilyHimTest
+MainRadioTest
+AnimalOfficerNetworkStoreTest
+SeekBitQuestionCloseStandTest
+```
+
+## Creating a Dependency File
+Run the below query in a Salesforce org to create a dependency list. 
 ```sql
 SELECT Id, 
   MetadataComponentId, 
