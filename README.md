@@ -211,3 +211,9 @@ table documents what the various phases do.
 | benchmark     | Run all of the benchmark tests.                                       |                                                                  |
 | viz_benchmark | Run the benchmarks and generate histograms for each test group.       |                                                                  |
 | check         | Perform static type checking on the project.                          | Uses mypy for type checking.                                     |
+
+The type checking, running tests, and generate benchmarks can all be run at once.
+
+```shell
+make check test benchmark viz_benchmark
+```

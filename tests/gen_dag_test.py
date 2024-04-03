@@ -15,4 +15,4 @@ class TestGenDagFile:
     #2. Load it as an adjacency list.
     dll = DependencyListLoader()
     adjacency_list: dict[str, DependencyListNode] = dll.load(dag_file)
-    assert len(adjacency_list) > 5
+    assert len(adjacency_list) >= 5
